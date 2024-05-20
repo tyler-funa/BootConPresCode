@@ -1,0 +1,12 @@
+#!/bin/bash
+
+case $1 in 
+	Tyler | Admin)
+		echo "hai boss"
+		;;
+	help)
+		echo "just enter your username!"
+		;;
+	*)
+		echo "hey enter a valid username"
+esac

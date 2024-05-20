@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ $1 = "tyler" ]; then
+	echo "hi tyler"
+elif [ $1 = "help" ]; then
+	echo "enter your name"
+else
+	echo "hi someone"
+fi

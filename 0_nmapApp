@@ -1,0 +1,286 @@
+#!/bin/bash
+
+echo "Hello What IPs will we be scanning today?"
+echo "You can either choose one ip such as 192.168.0.1"
+echo "A range such as 192.168.0.1-10"
+echo "Or a subnet such as 192.168.0.1/24"
+echo "Or you could also type local for nmap to use your local ip address for a scan"
+
+read ipAddress;
+if [ $ipAddress = local ]; then
+	shopt -s expand_aliases
+	source ~/.aliases
+	eval $command
+	ipAddress=$(myip)
+fi
+
+echo $ipAddress "is that correct? (yes/no)"
+read answer;
+case $answer in
+	no)
+		echo "okay Closing Program now please run again with the correct ip! :)"
+		;;
+	yes |"")
+		echo "okay ip address is $ipAddress got it! What options would we like to run? below are the valid options!"
+		echo "please type the number only when responding or an error will occur"
+		echo "1 - Default Scan (this will run nmap with no options)"
+		echo "2 - Fast Scan (this will scan less ports but return results quicker using the -F option)"
+		echo "3 - Port Scan only (this will run the default scan without ping with the -Pn option)"
+		echo "4 - UDP Scan (this will scan UDP ports instead of TCP ports with the -sU option)"
+		echo "5 - Service Scan (this will attemp to probe for services that could be using different ports using the -sV option)"
+		echo "6 - Fast Version detect (this will attempt to find the version of the host you are scanning with the -T4 option)"
+		echo "7 - Comprehensive Scan (this is the slowest and most noisy but it will also get you the most information with the -A option)"
+		echo "8 - Scan all the ports (this one is actually kind of silly but it uses the -p- option to scan every single port)"
+		read options;
+		;;
+	*)
+		echo "I don't understand please respond with either yes or no closing program"
+		exit 1
+esac
+
+case $options in
+	1)
+		echo "okay will run the following command"
+		echo "nmap $ipAddress or Default Scan"
+		echo "would you like me to"
+		echo "1 - print to screen"
+		echo "2 - save to a file"
+		echo "3 - both"
+		read viewOptions
+
+		case $viewOptions in
+			1)
+				echo "very well results will be printed to the screen"
+				nmap $ipAddress
+				;;
+			2)
+				echo "very well results will be saved to a file in the current directory"
+				echo "please provide a filename"
+				read fileName
+				nmap $ipAddress > $fileName
+				;;
+			3)
+				echo "very well results will be saved to a file in the current directory and displayed"
+				echo "please provide a file name"
+				read fileName
+				nmap $ipAddress > $fileName && cat $fileName
+		esac
+		;;
+	2)
+		echo "okay will run the following command"
+		echo "nmap -F $ipAddress or Fast Scan"
+		echo "would you like me to"
+		echo "1 - print to screen"
+		echo "2 - save to a file"
+		echo "3 - both"
+		read viewOptions
+
+		case $viewOptions in
+			1)
+				echo "very well results will be printed to the screen"
+				nmap -F $ipAddress
+				;;
+			2)
+				echo "very well results will be saved to a file in the current directory"
+				echo "please provide a filename"
+				read fileName
+				nmap -F $ipAddress > $fileName
+				;;
+			3)
+				echo "very well results will be saved to a file in the current directory and displayed"
+				echo "please provide a file name"
+				read fileName
+				nmap -F $ipAddress > $fileName && cat $fileName
+		esac
+		;;
+	3)
+		echo "okay will run the following command"
+		echo "nmap -Pn $ipAddress or Port Scan only"
+		echo "would you like me to"
+		echo "1 - print to screen"
+		echo "2 - save to a file"
+		echo "3 - both"
+		read viewOptions
+
+		case $viewOptions in
+			1)
+				echo "very well results will be printed to the screen"
+				nmap -Pn $ipAddress
+				;;
+			2)
+				echo "very well results will be saved to a file in the current directory"
+				echo "please provide a filename"
+				read fileName
+				nmap -Pn $ipAddress > $fileName
+				;;
+			3)
+				echo "very well results will be saved to a file in the current directory and displayed"
+				echo "please provide a file name"
+				read fileName
+				nmap -Pn $ipAddress > $fileName && cat $fileName
+		esac
+		;;
+	4)
+		echo "okay will run the following command"
+		echo "nmap -sU $ipAddress or UDP Scan"
+		echo "would you like me to"
+		echo "1 - print to screen"
+		echo "2 - save to a file"
+		echo "3 - both"
+		read viewOptions
+
+		case $viewOptions in
+			1)
+				echo "very well results will be printed to the screen"
+				nmap -sU $ipAddress
+				;;
+			2)
+				echo "very well results will be saved to a file in the current directory"
+				echo "please provide a filename"
+				read fileName
+				nmap -sU $ipAddress > $fileName
+				;;
+			3)
+				echo "very well results will be saved to a file in the current directory and displayed"
+				echo "please provide a file name"
+				read fileName
+				nmap -sU $ipAddress > $fileName && cat $fileName
+		esac
+		;;
+	5)
+		echo "okay will run the following command"
+		echo "nmap -sV $ipAddress or Service Scan"
+		echo "would you like me to"
+		echo "1 - print to screen"
+		echo "2 - save to a file"
+		echo "3 - both"
+		read viewOptions
+
+		case $viewOptions in
+			1)
+				echo "very well results will be printed to the screen"
+				nmap -sV $ipAddress
+				;;
+			2)
+				echo "very well results will be saved to a file in the current directory"
+				echo "please provide a filename"
+				read fileName
+				nmap -sV $ipAddress > $fileName
+				;;
+			3)
+				echo "very well results will be saved to a file in the current directory and displayed"
+				echo "please provide a file name"
+				read fileName
+				nmap -sV $ipAddress > $fileName && cat $fileName
+		esac
+		;;
+	6)
+		echo "okay will run the following command"
+		echo "nmap -T4 $ipAddress or Fast Version Detection"
+		echo "would you like me to"
+		echo "1 - print to screen"
+		echo "2 - save to a file"
+		echo "3 - both"
+		read viewOptions
+
+		case $viewOptions in
+			1)
+				echo "very well results will be printed to the screen"
+				nmap -T4 $ipAddress
+				;;
+			2)
+				echo "very well results will be saved to a file in the current directory"
+				echo "please provide a filename"
+				read fileName
+				nmap -T4 $ipAddress > $fileName
+				;;
+			3)
+				echo "very well results will be saved to a file in the current directory and displayed"
+				echo "please provide a file name"
+				read fileName
+				nmap -T4 $ipAddress > $fileName && cat $fileName
+		esac
+		;;
+	7)
+		echo "okay will run the following command"
+		echo "nmap -A $ipAddress or Comprehensive Scan"
+		echo "would you like me to"
+		echo "1 - print to screen"
+		echo "2 - save to a file"
+		echo "3 - both"
+		read viewOptions
+
+		case $viewOptions in
+			1)
+				echo "very well results will be printed to the screen"
+				nmap -A $ipAddress
+				;;
+			2)
+				echo "very well results will be saved to a file in the current directory"
+				echo "please provide a filename"
+				read fileName
+				nmap -A $ipAddress > $fileName
+				;;
+			3)
+				echo "very well results will be saved to a file in the current directory and displayed"
+				echo "please provide a file name"
+				read fileName
+				nmap -A $ipAddress > $fileName && cat $fileName
+		esac
+		;;
+	8)
+		echo "okay will run the following command"
+		echo "nmap -p- $ipAddress or Scan all Ports"
+		echo "would you like me to"
+		echo "1 - print to screen"
+		echo "2 - save to a file"
+		echo "3 - both"
+		read viewOptions
+
+		case $viewOptions in
+			1)
+				echo "very well results will be printed to the screen"
+				nmap -p- $ipAddress
+				;;
+			2)
+				echo "very well results will be saved to a file in the current directory"
+				echo "please provide a filename"
+				read fileName
+				nmap -p- $ipAddress > $fileName
+				;;
+			3)
+				echo "very well results will be saved to a file in the current directory and displayed"
+				echo "please provide a file name"
+				read fileName
+				nmap -p- $ipAddress > $fileName && cat $fileName
+		esac
+		;;
+	*)
+		echo "I don't understand please enter a valid option numbering 1-8 closing program"
+		exit 1
+esac
+
+
+
+# echo "okay you'd like to use the following option(s) $options Running Scan now"
+
+
+
+
+
+
+
+
+
+# planned abilities
+# 	run commands with sudo // push goal?
+# 	use regular nmap scan (nmap)/default scan with an ip address or range as input //
+# 	use Comprehensive nmap scan (nmap -A) with an ip address or range as input /
+# 	use a version detection scan or service scan (nmap -sV) with ip /
+# 	allow fast detection with -T4 /
+# 	allow udp scan with -sU /
+# 	allow fast port scan by scanning fewer ports with -F /
+# 	allow to choose which ports to scan with -p
+# 	allow to scan ALL ports with -p-
+# 	disable ping scan -Pn /
+#

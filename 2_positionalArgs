@@ -1,0 +1,7 @@
+#!/bin/bash
+
+
+#this will accept two arguments seperated by a space when running the program
+#Example: bash postionalArgs Tyler Funa will return hello Tyler Funa`
+
+echo hello $1 $2
